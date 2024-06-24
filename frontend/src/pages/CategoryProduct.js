@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import productCategory from '../helpers/productCategory'
 import VerticalCard from '../components/VerticalCard'
 import SummaryApi from '../common'
+import { VscThreeBars } from "react-icons/vsc";
 
 const CategoryProduct = () => {
 
@@ -88,6 +89,7 @@ const CategoryProduct = () => {
       }
      }
 
+
      useEffect(()=>{
 
      },[shortBy])
@@ -95,9 +97,9 @@ const CategoryProduct = () => {
   return (
     <div  className='container mx-auto p-4'>
         {/* desktop version */}
-        <div className='hidden lg:grid grid-cols-[200px,1fr]'>
+        <div className=' lg:grid grid-cols-[200px,1fr]'>
           {/* left side */}
-          <div className='bg-white p-2 min-h-[calc(100vh-120px)] overflow-y-scroll'>
+          <div className='flex flex-col md:block bg-white p-2 md:min-h-[calc(100vh-120px)] overflow-y-scroll'>
             {/* short by */}
              <div className='text-lg'> 
               <h3 className='text-base  uppercase font-medium text-slate-500 pb-1 border-b border-slate-300'>Short by</h3>
@@ -118,10 +120,10 @@ const CategoryProduct = () => {
             </div>
 
            {/* filter by */}
-            <div className='text-lg'> 
+            <div className=' text-lg'> 
               <h3 className='text-base  uppercase font-medium text-slate-500 pb-1 border-b border-slate-300'>Category</h3>
 
-              <form className='text-sm flex flex-col gap-2 py-2'>
+              <form className='text-sm flex flex-wrap gap-2 py-2'>
                 
                   {
                     productCategory.map((categoryName,index)=>{
@@ -141,7 +143,11 @@ const CategoryProduct = () => {
 
           {/* right side(product) */}
           <div className=''>
-            <p className='text-slate-800 font-medium text-lg my-2'>Search Result : {data.length}</p>
+
+            <div className='flex justify-between items-center'>
+              <p className='text-slate-800 font-medium text-lg my-2'>Search Result : {data.length}</p>
+            </div>
+    
             <div className='min-h-[calc(100vh-120px)] overflow-y-scroll max-h-[calc(100vh-120px)]'>
             {
               data.length !== 0 &&  (
