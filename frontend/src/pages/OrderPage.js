@@ -61,7 +61,6 @@ useEffect(()=>{
                       
                         <div className='mr-10'>
                           <div className=' font-medium'>Payment Details : </div>
-                          <p>UserName : </p>
                           <p className=' ml-1'>Payment Method : {item.paymentDetails.payment_method_types}</p>
                           <p className=' ml-1'>Payment Status : {item.paymentDetails.payment_status}</p>
                         </div>
@@ -83,6 +82,7 @@ useEffect(()=>{
 
                   </div>
 
+                  <p>Email ID : {item.email}</p>
                   <div  className='font-medium text-lg ml-1'>
                   Total Amount : {displayINRcurrency(item.totalAmount)}
                   </div>
