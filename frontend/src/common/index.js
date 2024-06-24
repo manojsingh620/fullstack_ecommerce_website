@@ -106,6 +106,11 @@ const SummaryApi = {
       method: "get",
     },
   
+    allOrderList: {
+      url: `${backendDomain}/api/all-orders`,
+      method: "get",
+    },
+  
 };
 
 export default SummaryApi;

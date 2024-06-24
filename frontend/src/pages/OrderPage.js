@@ -60,7 +60,8 @@ useEffect(()=>{
                     <div className='flex flex-col lg:flex-row gap-4 p-10'>
                       
                         <div className='mr-10'>
-                          <div className=' font-medium'>Payment Details : {}</div>
+                          <div className=' font-medium'>Payment Details : </div>
+                          <p>UserName : </p>
                           <p className=' ml-1'>Payment Method : {item.paymentDetails.payment_method_types}</p>
                           <p className=' ml-1'>Payment Status : {item.paymentDetails.payment_status}</p>
                         </div>
