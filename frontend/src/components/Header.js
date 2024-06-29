@@ -55,7 +55,7 @@ const Header = () => {
   return (
     <header className="h-16 shadow-md bg-white fixed w-full z-40">
       <div className="h-full container mx-0 flex items-center px-1 justify-between">
-        <div className="flex  items-center justify-between ">
+        <div className="flex  items-center justify-between">
           <div className="font-bold">
             <Link to={"/"}>
               {/* <Logo w={90} h={50} /> */}
@@ -64,7 +64,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div className=" hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow md:pl-2">
+        <div className="ml-2 flex lg:flex items-center w-40 md:w-full justify-between md:max-w-sm border rounded-full focus-within:shadow md:pl-2">
           <input
             type="text"
             placeholder="search product here.."
@@ -72,7 +72,7 @@ const Header = () => {
             onChange={handleSearch}
             value={search}
           />
-          <div className="text-lg min-w-[50px] h-8 bg-orange-600 flex items-center justify-center rounded-r-full text-white">
+          <div className="text-lg min-w-[30px] md:min-w-[50px] h-6 md:h-8 bg-orange-600 flex items-center justify-center rounded-r-full text-white">
             <HiOutlineSearch />
           </div>
         </div>
@@ -137,9 +137,9 @@ const Header = () => {
               {user?._id ? (
                 <button
                   onClick={handlelogout}
-                  className="px-1 md:px-3 md:py-1 rounded-full border-2 border-orange-700 hover:text-white hover:bg-orange-700"
+                  className="px-1 md:px-3 py-0 md:py-1 rounded-full border-2 border-orange-700 hover:text-white hover:bg-orange-700"
                 >
-                  Logout
+                  Logout  
                 </button>
               ) : (
                 <Link
