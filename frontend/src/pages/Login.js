@@ -14,9 +14,8 @@ function Login() {
     password: "",
   });
 
-
-  const navigate = useNavigate()
-  const {fetchUserDetails,fetchUserAddToCart} = useContext(Context)
+  const navigate = useNavigate();
+  const { fetchUserDetails, fetchUserAddToCart } = useContext(Context);
 
   const handlOnChange = (e) => {
     const { name, value } = e.target;
@@ -45,9 +44,9 @@ function Login() {
 
     if (dataApi.success) {
       toast.success(dataApi.message);
-      navigate("/")
-      fetchUserDetails()
-      fetchUserAddToCart()
+      navigate("/");
+      fetchUserDetails();
+      fetchUserAddToCart();
     }
 
     if (dataApi.error) {

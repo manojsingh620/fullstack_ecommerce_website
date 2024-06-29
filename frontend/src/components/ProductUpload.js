@@ -5,9 +5,9 @@ import { MdCloudUpload, MdDelete } from "react-icons/md";
 import uploadImage from "../helpers/uploadImage";
 import DisplayImage from "./DisplayImage";
 import SummaryApi from "../common";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 
-const ProductUpload = ({ onClose ,fetchData}) => {
+const ProductUpload = ({ onClose, fetchData }) => {
   const [data, setData] = useState({
     ProductName: "",
     BrandName: "",
@@ -18,77 +18,73 @@ const ProductUpload = ({ onClose ,fetchData}) => {
     SellingPrice: "",
   });
 
- const [openFullScreenImg,setOpenFullScreenImg]=useState(false)
- const [fullScreenImg,setFullScreenImg] = useState("")
+  const [openFullScreenImg, setOpenFullScreenImg] = useState(false);
+  const [fullScreenImg, setFullScreenImg] = useState("");
 
   const handleOnChange = (e) => {
-    const {name,value}=e.target 
-    setData((preve)=>{
-      return{
+    const { name, value } = e.target;
+    setData((preve) => {
+      return {
         ...preve,
-        [name] : value
-      }
-    })
+        [name]: value,
+      };
+    });
   };
 
-  const handelUploadProduct=async(e)=>{
-    const file = e.target.files[0]
+  const handelUploadProduct = async (e) => {
+    const file = e.target.files[0];
     // setUploadImageInp(file.name)
     // console.log("file",file);
-    const imageUploadCloudinary = await uploadImage(file)
+    const imageUploadCloudinary = await uploadImage(file);
 
-    setData((preve)=>{
-      return{
+    setData((preve) => {
+      return {
         ...preve,
-        ProductImage : [...preve.ProductImage,imageUploadCloudinary.url]
-      }
-    })
+        ProductImage: [...preve.ProductImage, imageUploadCloudinary.url],
+      };
+    });
+  };
 
-  }
+  const handelDeleteProductImg = async (index) => {
+    console.log("image index", index);
 
-  const handelDeleteProductImg = async (index)=>{
-    console.log("image index",index)
-    
-    const newProductImage = [...data.ProductImage]
-    newProductImage.splice(index,1)
+    const newProductImage = [...data.ProductImage];
+    newProductImage.splice(index, 1);
 
-    setData((preve)=>{
-      return{
+    setData((preve) => {
+      return {
         ...preve,
-        ProductImage : [...newProductImage]
-      }
-    })
-    
-  } 
+        ProductImage: [...newProductImage],
+      };
+    });
+  };
 
   // Upload Product
 
-  const handelSubmit=async(e)=>{
-     e.preventDefault()
-    
-     const response = await fetch(SummaryApi.uploadProduct.url,{
-      method : SummaryApi.uploadProduct.method,
-      credentials : 'include',
-      headers : {
-        "content-type" : "application/json"
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(SummaryApi.uploadProduct.url, {
+      method: SummaryApi.uploadProduct.method,
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
       },
-      body : JSON.stringify(data)
-     })
+      body: JSON.stringify(data),
+    });
 
-     const responseData =await response.json()
+    const responseData = await response.json();
 
-     if(responseData.success){
-      toast.success(responseData?.message)
-      onClose()
-      fetchData()
-     }
+    if (responseData.success) {
+      toast.success(responseData?.message);
+      onClose();
+      fetchData();
+    }
 
-     if(responseData.error){
-      toast.error(responseData?.message)
-     }
-
-
-  }
+    if (responseData.error) {
+      toast.error(responseData?.message);
+    }
+  };
 
   return (
     <div className="fixed w-full h-full bg-slate-200 bg-opacity-35 top-20  left-0 right-0 bottom-0 flex justify-center">
@@ -103,7 +99,10 @@ const ProductUpload = ({ onClose ,fetchData}) => {
           </div>
         </div>
 
-        <form className="grid p-4 gap-1 overflow-y-scroll h-full pb-5" onSubmit={handelSubmit}>
+        <form
+          className="grid p-4 gap-1 overflow-y-scroll h-full pb-5"
+          onSubmit={handelSubmit}
+        >
           <label htmlFor="ProductName">Product Name :</label>
           <input
             type="text"
@@ -133,9 +132,10 @@ const ProductUpload = ({ onClose ,fetchData}) => {
           </label>
           <select
             required
-            value={data.Category} name="Category"
+            value={data.Category}
+            name="Category"
             className="p-2 bg-slate-100 border rounded"
-            onChange={handleOnChange} 
+            onChange={handleOnChange}
           >
             <option value={""}>Select Category</option>
             {productCategory.map((el, index) => {
@@ -153,54 +153,57 @@ const ProductUpload = ({ onClose ,fetchData}) => {
 
           <label htmlFor="ProductImageUpload">
             <div className="bg-slate-100 border rounded h-32 w-full flex justify-center items-center cursor-pointer">
-
               <div className="text-slate-500 flex justify-center items-center flex-col gap-2">
                 <span className="text-3xl">
                   <MdCloudUpload />
                 </span>
                 <p className="text-1.5xl">upload product image</p>
-                <input type="file" id="ProductImageUpload" name="ProductImageUpload"  className="hidden" onChange={handelUploadProduct} required />
+                <input
+                  type="file"
+                  id="ProductImageUpload"
+                  name="ProductImageUpload"
+                  className="hidden"
+                  onChange={handelUploadProduct}
+                  required
+                />
               </div>
-
             </div>
           </label>
           <div>
+            {data?.ProductImage[0] ? (
+              <div className="flex items-center gap-2">
+                {data.ProductImage.map((el, index) => {
+                  return (
+                    <div className="relative group">
+                      <img
+                        src={el}
+                        alt={el}
+                        width={80}
+                        height={80}
+                        className="bg-slate-100 border cursor-pointer "
+                        onClick={() => {
+                          setOpenFullScreenImg(true);
+                          setFullScreenImg(el);
+                        }}
+                      />
 
-              {
-                data?.ProductImage[0] ? (
-                  <div className="flex items-center gap-2">
-                    {
-                      data.ProductImage.map((el,index)=>{
-                        return(
-                          <div className="relative group">
-                            
-                              <img
-                              src={el} alt={el}
-                              width={80}
-                              height={80}
-                              className="bg-slate-100 border cursor-pointer "
-                              onClick={()=>{
-                              setOpenFullScreenImg(true)
-                              setFullScreenImg(el)
-                              }}
-                              />
-
-                              <div className="absolute bottom-0 right-0 p-1 text-white bg-red-600 rounded-full hidden group-hover:block cursor-pointer" onClick={()=>handelDeleteProductImg(index)}>
-                              <MdDelete />
-                              </div>
-                           </div>
-                        )
-                      })
-                    }
-                  </div>
-                ):(
-                 <p className="text-red-500 text-xs">*please upload product image</p>
-                )
-              }
-
-            
+                      <div
+                        className="absolute bottom-0 right-0 p-1 text-white bg-red-600 rounded-full hidden group-hover:block cursor-pointer"
+                        onClick={() => handelDeleteProductImg(index)}
+                      >
+                        <MdDelete />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-red-500 text-xs">
+                *please upload product image
+              </p>
+            )}
           </div>
-      
+
           <label htmlFor="Price">Price :</label>
           <input
             type="number"
@@ -226,32 +229,30 @@ const ProductUpload = ({ onClose ,fetchData}) => {
           />
 
           <label htmlFor="Discription">Discription :</label>
-          <textarea className="h-28 bg-slate-100 border resize-none p-1" 
-          name="Discription"
-          value={data.Discription}
-          rows={3} 
-          onChange={handleOnChange}
-          placeholder="enter product discription"
-          required
-          >
+          <textarea
+            className="h-28 bg-slate-100 border resize-none p-1"
+            name="Discription"
+            value={data.Discription}
+            rows={3}
+            onChange={handleOnChange}
+            placeholder="enter product discription"
+            required
+          ></textarea>
 
-          </textarea>
-
-
-          <button className="p-2 bg-red-600 text-white rounded mb-5 hover:bg-red-700">Upload Product</button>
-
+          <button className="p-2 bg-red-600 text-white rounded mb-5 hover:bg-red-700">
+            Upload Product
+          </button>
         </form>
       </div>
 
       {/* Display image  full screen */}
 
-      {
-        openFullScreenImg && (
-        <DisplayImage onClose={()=>setOpenFullScreenImg(false)} imgUrl={fullScreenImg}/>
-      )
-      }
-      
-
+      {openFullScreenImg && (
+        <DisplayImage
+          onClose={() => setOpenFullScreenImg(false)}
+          imgUrl={fullScreenImg}
+        />
+      )}
     </div>
   );
 };

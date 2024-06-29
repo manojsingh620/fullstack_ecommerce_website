@@ -14,12 +14,12 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const [manuDisplay, setManuDisplay] = useState(false);
-  const context = useContext(Context)
-  const navigate = useNavigate()
-  const searchInpt = useLocation()
-  const URLsearch = new URLSearchParams(searchInpt?.search)
-  const searchQuery = URLsearch.getAll("q")
-  const [search,setSearch]=useState(searchQuery)
+  const context = useContext(Context);
+  const navigate = useNavigate();
+  const searchInpt = useLocation();
+  const URLsearch = new URLSearchParams(searchInpt?.search);
+  const searchQuery = URLsearch.getAll("q");
+  const [search, setSearch] = useState(searchQuery);
 
   console.log("user header", user);
 
@@ -34,7 +34,7 @@ const Header = () => {
     if (data.success) {
       toast.success(data.message);
       dispatch(setUserDetails(null));
-      navigate("/")
+      navigate("/");
     }
 
     if (data.error) {
@@ -42,26 +42,26 @@ const Header = () => {
     }
   };
 
-  const handleSearch=(e)=>{
-      const {value} =e.target
-      setSearch(value)
-      if(value){
-        navigate(`/search?q=${value}`)
-      }else{
-        navigate("/search")
-      }
-  }
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    setSearch(value);
+    if (value) {
+      navigate(`/search?q=${value}`);
+    } else {
+      navigate("/search");
+    }
+  };
 
   return (
     <header className="h-16 shadow-md bg-white fixed w-full z-40">
       <div className="h-full container mx-0 flex items-center px-1 justify-between">
         <div className="flex  items-center justify-between ">
-              <div className="font-bold">
-                <Link to={"/"}>
-                  {/* <Logo w={90} h={50} /> */}
-                  MANOJ
-                </Link>
-              </div>
+          <div className="font-bold">
+            <Link to={"/"}>
+              {/* <Logo w={90} h={50} /> */}
+              MANOJ
+            </Link>
+          </div>
         </div>
 
         <div className=" hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow md:pl-2">
@@ -79,9 +79,8 @@ const Header = () => {
 
         <div className="flex items-center  gap-1 md:gap-7">
           <div className="relative flex justify-center">
-
-            {
-              user?._id && (<div
+            {user?._id && (
+              <div
                 className="text-3xl cursor-pointer relative flex justify-center"
                 onClick={() => setManuDisplay((prevel) => !prevel)}
               >
@@ -94,65 +93,64 @@ const Header = () => {
                 ) : (
                   <FaCircleUser />
                 )}
-              </div>)
-            }
-              
+              </div>
+            )}
 
             {manuDisplay && (
-                <div className="absolute bottom-0 top-11 h-fit p-2 shadow-lg rounded ">
-                  <nav>
-                    {
-                      user?.role === ROLE.ADMIN && (
-                        <Link
-                        to={"/admin-panel/all-products"}
-                        className="whitespace-nowrap hidden md:block hover:bg-slate-100 p-2 "  onClick={() => setManuDisplay((prevel) => !prevel)}
-                      >
-                        Admin panal
-                      </Link>
-                      )
-                    }
-                    <Link to={"/order"} className="whitespace-nowrap  md:block hover:bg-slate-100 p-2" onClick={() => setManuDisplay((prevel) => !prevel)}>Order</Link>
-                    
-                  </nav>
-                </div>
+              <div className="absolute bottom-0 top-11 h-fit p-2 shadow-lg rounded ">
+                <nav>
+                  {user?.role === ROLE.ADMIN && (
+                    <Link
+                      to={"/admin-panel/all-products"}
+                      className="whitespace-nowrap hidden md:block hover:bg-slate-100 p-2 "
+                      onClick={() => setManuDisplay((prevel) => !prevel)}
+                    >
+                      Admin panal
+                    </Link>
+                  )}
+                  <Link
+                    to={"/order"}
+                    className="whitespace-nowrap  md:block hover:bg-slate-100 p-2"
+                    onClick={() => setManuDisplay((prevel) => !prevel)}
+                  >
+                    Order
+                  </Link>
+
+                </nav>
+              </div>
             )}
           </div>
 
-          
           <div className="flex items-center gap-4 md:gap-7">
-              {
-                user?._id && (
-                    <Link to={"/cart"} className=" md:block text-2xl relative">
-                      <span>
-                        <FaShoppingCart />
-                      </span>
-                      <div className="bg-orange-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3">
-                      <p className="text-sm">{context.countcartproduct}</p>
-                      </div>
-                    </Link>
-                  )
-              }    
-              
+            {user?._id && (
+              <Link to={"/cart"} className=" md:block text-2xl relative">
+                <span>
+                  <FaShoppingCart />
+                </span>
+                <div className="bg-orange-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3">
+                  <p className="text-sm">{context.countcartproduct}</p>
+                </div>
+              </Link>
+            )}
 
-              <div>
-                {user?._id ? (
-                  <button
-                    onClick={handlelogout}
-                    className="px-1 md:px-3 md:py-1 rounded-full border-2 border-orange-700 hover:text-white hover:bg-orange-700"
-                  >
-                    Logout
-                  </button>
-                ) : (
-                  <Link
-                    to={"/login"}
-                    className="px-3 py-1 rounded-full border-2 border-orange-700 hover:text-white hover:bg-orange-700"
-                  >
-                    Login
-                  </Link>
-                )}
-              </div>
+            <div>
+              {user?._id ? (
+                <button
+                  onClick={handlelogout}
+                  className="px-1 md:px-3 md:py-1 rounded-full border-2 border-orange-700 hover:text-white hover:bg-orange-700"
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to={"/login"}
+                  className="px-3 py-1 rounded-full border-2 border-orange-700 hover:text-white hover:bg-orange-700"
+                >
+                  Login
+                </Link>
+              )}
+            </div>
           </div>
-
         </div>
       </div>
     </header>

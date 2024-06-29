@@ -5,15 +5,14 @@ import moment from "moment";
 import { MdModeEdit } from "react-icons/md";
 import ChangeUserRoll from "../components/ChangeUserRoll";
 
-
 const Allusers = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [openUpdateRole, setOpenUpdateRole] = useState(false);
   const [updateUserDetails, setUpdateUserDetails] = useState({
-    email :"",
-    name : "",
-    role : "",
-    _id : ""
+    email: "",
+    name: "",
+    role: "",
+    _id: "",
   });
 
   const fetchAllUsers = async () => {
@@ -51,45 +50,43 @@ const Allusers = () => {
           </tr>
         </thead>
         <tbody>
-         {
-          allUsers.map((el,index)=>{
-            return(
+          {allUsers.map((el, index) => {
+            return (
               <tr>
-                <td>{index+1}</td>
+                <td>{index + 1}</td>
                 <td>{el?.name}</td>
                 <td>{el?.email}</td>
                 <td>{el?.role}</td>
                 <td>{moment(el?.updatedAt).format("LL")}</td>
                 <td>
-                  <button className="bg-green-200 p-3  rounded-full cursor-pointer hover:bg-green-400 hover:text-white" 
-                  onClick={()=>{
-                    setUpdateUserDetails(el)
-                    setOpenUpdateRole(true)
-                  }}>
-                  <MdModeEdit />
+                  <button
+                    className="bg-green-200 p-3  rounded-full cursor-pointer hover:bg-green-400 hover:text-white"
+                    onClick={() => {
+                      setUpdateUserDetails(el);
+                      setOpenUpdateRole(true);
+                    }}
+                  >
+                    <MdModeEdit />
                   </button>
                 </td>
               </tr>
-            )
-          })
-         }
+            );
+          })}
         </tbody>
       </table>
 
-      {
-        openUpdateRole && (
-          <ChangeUserRoll 
-            onclose={()=>{setOpenUpdateRole(false)}}
-            name={updateUserDetails.name}
-            email={updateUserDetails.email}
-            role={updateUserDetails.role}
-            userId={updateUserDetails._id}
-            callFunc={fetchAllUsers}
-          />
-        )
-      }
-
-      
+      {openUpdateRole && (
+        <ChangeUserRoll
+          onclose={() => {
+            setOpenUpdateRole(false);
+          }}
+          name={updateUserDetails.name}
+          email={updateUserDetails.email}
+          role={updateUserDetails.role}
+          userId={updateUserDetails._id}
+          callFunc={fetchAllUsers}
+        />
+      )}
     </div>
   );
 };
